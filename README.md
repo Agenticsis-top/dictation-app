@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# Dictation App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A browser-native speech-to-text webapp. Speak naturally and get a clean, copyable transcript instantly — no API key, no account, no subscriptions.
 
-Currently, two official plugins are available:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fagenticsis%2Fdictation-app&project-name=dictation-app&repository-name=dictation-app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## What you get
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Real-time speech-to-text transcription in your browser
+- Start, pause, and clear controls
+- One-click copy to clipboard
+- Works on Chrome and Edge (any browser with the Web Speech API)
+- No API key required — powered entirely by your browser's built-in speech recognition
+- Deploys to Vercel in under 2 minutes
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Deploy your own instance
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Click the button above. Vercel will:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Clone this repo into your GitHub account
+2. Create a free Vercel account (if you don't have one)
+3. Connect GitHub to Vercel automatically
+4. Deploy the app and give you a live URL
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+No credit card. No ongoing cost.
+
+---
+
+## Run locally
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open [http://localhost:5173](http://localhost:5173).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Stack
+
+- React 19 + TypeScript
+- Vite
+- Tailwind CSS
+- Web Speech API (browser-native, no external API)
+
+---
+
+## License
+
+MIT — free to use, modify, and deploy.
+
+---
+
+Built by [Agenticsis](https://agenticsis.top) · AI systems for business.

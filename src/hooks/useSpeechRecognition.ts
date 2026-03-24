@@ -10,6 +10,57 @@ const SUPPORTED_LANGUAGES = [
 
 export { SUPPORTED_LANGUAGES };
 
+// Maps spoken punctuation words → symbols, ordered longest-match first.
+// Covers English, Spanish, German, and French commands.
+const PUNCTUATION_COMMANDS: [RegExp, string][] = [
+  // New line / paragraph
+  [/\b(new line|new paragraph|nueva línea|nueva linea|neue zeile|nouvelle ligne)\b/gi, '\n'],
+  // Ellipsis
+  [/\b(ellipsis|puntos suspensivos|Auslassungszeichen|points de suspension)\b/gi, '...'],
+  // Double quote open/close
+  [/\b(open quote|open quotes|comillas abrir|öffnendes anführungszeichen|ouvrir guillemet)\b/gi, '"'],
+  [/\b(close quote|close quotes|comillas cerrar|schließendes anführungszeichen|fermer guillemet)\b/gi, '"'],
+  // Parentheses
+  [/\b(open parenthesis|left parenthesis|paréntesis abrir|klammer auf|ouvrir parenthèse)\b/gi, '('],
+  [/\b(close parenthesis|right parenthesis|paréntesis cerrar|klammer zu|fermer parenthèse)\b/gi, ')'],
+  // Multi-word punctuation names before single-word ones
+  [/\b(question mark|signo de interrogación|signo de interrogacion|Fragezeichen|point d'interrogation)\b/gi, '?'],
+  [/\b(exclamation mark|exclamation point|signo de exclamación|signo de exclamacion|Ausrufezeichen|point d'exclamation)\b/gi, '!'],
+  [/\b(full stop|punto final|punto)\b/gi, '.'],
+  [/\b(semicolon|punto y coma|Semikolon|point-virgule)\b/gi, ';'],
+  [/\b(colon|dos puntos|Doppelpunkt|deux points)\b/gi, ':'],
+  [/\b(dash|guión largo|Gedankenstrich|tiret)\b/gi, ' -- '],
+  [/\b(hyphen|guión|Bindestrich|trait d'union)\b/gi, '-'],
+  // Simple single-word commands last
+  [/\b(comma|coma|Komma|virgule)\b/gi, ','],
+  [/\b(period|Punkt|point)\b/gi, '.'],
+];
+
+// After applying punctuation, capitalize the first letter following . ! ? \n
+function applyPunctuation(text: string): string {
+  let result = text;
+  for (const [pattern, symbol] of PUNCTUATION_COMMANDS) {
+    // Replace " word" or "word " patterns cleanly, trimming surrounding spaces
+    result = result.replace(pattern, (_match, _p1, offset, str) => {
+      // Remove a leading space if the symbol attaches to the previous word
+      const attachesLeft = [',', '.', '!', '?', ';', ':'].includes(symbol);
+      const before = attachesLeft && str[offset - 1] === ' ' ? '' : '';
+      return before + symbol;
+    });
+  }
+  // Collapse multiple spaces (but preserve newlines)
+  result = result.replace(/[ \t]{2,}/g, ' ');
+  // Capitalize first letter after sentence-ending punctuation + space
+  result = result.replace(/([.!?]\s+)([a-záéíóúüñàâçèêîôùûäöß])/gi, (_, punct, letter) =>
+    punct + letter.toUpperCase()
+  );
+  // Capitalize after newline
+  result = result.replace(/(\n)([a-záéíóúüñàâçèêîôùûäöß])/gi, (_, nl, letter) =>
+    nl + letter.toUpperCase()
+  );
+  return result;
+}
+
 function getSpeechRecognition(): SpeechRecognition | null {
   if (typeof window === 'undefined') return null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,7 +115,7 @@ export function useSpeechRecognition() {
       }
 
       if (finalDelta) {
-        setFinalText((prev) => prev + finalDelta);
+        setFinalText((prev) => applyPunctuation(prev + finalDelta));
       }
       setInterimText(interim);
     };
