@@ -123,6 +123,21 @@ export default function App() {
           </table>
         </div>
 
+        {/* CTA */}
+        <div className="text-center border border-neutral-800 rounded-2xl p-5 bg-neutral-900/50">
+          <p className="text-sm text-neutral-400 leading-relaxed">
+            Want this tool customized for your brand — or need something built from scratch?{' '}
+            <span className="text-neutral-200">We build AI-powered tools that work for your business.</span>
+          </p>
+          <p className="text-sm text-neutral-500 mt-2">
+            Get in touch or write to{' '}
+            <a href="mailto:info@agenticsis.top" className="text-violet-400 hover:text-violet-300 transition-colors">
+              info@agenticsis.top
+            </a>{' '}
+            — we'll make it yours.
+          </p>
+        </div>
+
         {/* Footer */}
         <p className="text-center text-xs text-neutral-700">
           Agenticsis &mdash; powered by Web Speech API
