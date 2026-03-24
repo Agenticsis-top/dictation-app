@@ -94,6 +94,35 @@ export default function App() {
           <MicButton isListening={isListening} onToggle={handleToggle} />
         </div>
 
+        {/* Voice commands reference */}
+        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5">
+          <p className="text-xs text-neutral-600 font-medium uppercase tracking-wider mb-3">Voice Commands</p>
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="border-b border-neutral-800">
+                <th className="text-left text-neutral-500 font-medium pb-2 pr-4">Say this</th>
+                <th className="text-left text-neutral-500 font-medium pb-2">Inserts</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-neutral-800/60">
+              {[
+                { say: '"comma" / "coma"', symbol: ',' },
+                { say: '"period" / "punto" / "full stop"', symbol: '.' },
+                { say: '"enter" / "new line"', symbol: '↵' },
+                { say: '"question mark"', symbol: '?' },
+                { say: '"exclamation" / "exclamation mark"', symbol: '!' },
+                { say: '"colon"', symbol: ':' },
+                { say: '"semicolon"', symbol: ';' },
+              ].map(({ say, symbol }) => (
+                <tr key={symbol} className="group">
+                  <td className="py-2 pr-4 text-neutral-400 group-hover:text-neutral-300 transition-colors">{say}</td>
+                  <td className="py-2 font-mono text-violet-400">{symbol}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
         {/* Footer */}
         <p className="text-center text-xs text-neutral-700">
           Agenticsis &mdash; powered by Web Speech API
